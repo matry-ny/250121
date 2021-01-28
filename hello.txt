@@ -1,3 +1,2 @@
-Hello world!!!
-Second Line <> 250
-Third line $100
+Hello world!
+Second Line
