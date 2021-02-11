@@ -15,3 +15,6 @@ const MY_COEFFICIENT = 4;
 $salary = 2000;
 echo $salary * MY_COEFFICIENT, PHP_EOL;
 
+echo __DIR__, PHP_EOL;
+echo __FILE__, PHP_EOL;
+echo __LINE__, PHP_EOL;
