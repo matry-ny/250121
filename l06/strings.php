@@ -28,3 +28,6 @@ $heredoc = <<<HTML
 </script>
 HTML;
 echo $heredoc, PHP_EOL;
+
+$concat = 'This string' . 'is concatenated' . PHP_EOL . 'From 2 strings' . PHP_EOL;
+echo $concat;
