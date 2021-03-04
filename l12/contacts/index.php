@@ -1,3 +1,8 @@
+<?php
+
+$comments = require __DIR__ . '/get-comments.php';
+
+?>
 <!doctype html>
 <html lang="en" class="h-100">
 <head>
@@ -59,6 +64,23 @@
 
             <button type="submit" class="btn btn-success">Send Comment</button>
         </form>
+
+        <table>
+        <?php foreach ($comments as $comment) : ?>
+            <tr>
+                <td>
+                    <p>
+                        <?= $comment['author'], '<br>' ?>
+                        <?= $comment['gender'], '<br>' ?>
+                        <?= date('Y-m-d H:i:s', $comment['time']) ?>
+                    </p>
+                </td>
+                <td valign="top">
+                    <?= nl2br($comment['comment']) ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </table>
     </div>
 </main>
 
