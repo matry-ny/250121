@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/lib/security.php';
+
 $storage = __DIR__ . '/storage/';
 $userRout = $_GET['rout'];
 

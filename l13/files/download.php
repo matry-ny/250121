@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/lib/security.php';
+
 require_once __DIR__ . '/lib/files_render.php';
 
 $rout = __DIR__ . '/storage/' . $_GET['rout'];

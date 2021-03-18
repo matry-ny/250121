@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/lib/security.php';
+
 $rout = __DIR__ . '/storage/';
 
 $userDir = $_POST['dir'] ?? '';
