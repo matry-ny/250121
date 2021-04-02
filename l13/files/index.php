@@ -1,8 +1,8 @@
 <?php
 
 require_once __DIR__ . '/lib/security.php';
-
 require_once __DIR__ . '/lib/files_render.php';
+require_once __DIR__ . '/lib/sorting.php';
 
 $storage = __DIR__ . '/storage';
 
@@ -16,6 +16,7 @@ if (stripos($dir, $storage) !== 0) {
 $userDir = str_replace($storage, '', $dir);
 
 $routs = scandir($dir);
+usort($routs, 'sortFileType');
 
 $file = $_GET['file'] ?? '';
 $fileHtml = drawFile($dir, $file);

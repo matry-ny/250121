@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y \
         htop \
             --no-install-recommends
 
-RUN docker-php-ext-install zip intl mbstring pdo_mysql exif \
+RUN docker-php-ext-install zip intl mbstring pdo_mysql exif mysqli \
     && docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/ \
     && docker-php-ext-install gd
 

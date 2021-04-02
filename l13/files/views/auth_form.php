@@ -1,3 +1,10 @@
+<?php
+
+require_once __DIR__ . '/../lib/sessions.php';
+
+$registerData = sessionGet('register-form', []);
+
+?>
 <!doctype html>
 <html lang="en" class="h-100">
 <head>
@@ -37,18 +44,60 @@
 <!-- Begin page content -->
 <main class="flex-shrink-0">
     <div class="container">
-        <?php if (isset($error)) : ?>
+        <?php foreach (getFlash('errors', []) as $error) : ?>
             <div class="alert alert-danger" role="alert">
                 <?= $error ?>
             </div>
-        <?php endif ?>
+        <?php endforeach; ?>
         <form method="post">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
             <label for="inputEmail" class="visually-hidden">Email address</label>
             <input type="email" name="login" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
             <label for="inputPassword" class="visually-hidden">Password</label>
             <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Sign In</button>
+        </form>
+
+        <h5 class="mt-5">or register</h5>
+
+        <form method="post" action="register.php">
+            <label for="inputName" class="visually-hidden">Name</label>
+            <input type="text"
+                   name="name"
+                   value="<?= $registerData['name'] ?? '' ?>"
+                   id="inputName"
+                   class="form-control"
+                   placeholder="Name"
+                   required>
+
+            <label for="inputEmail" class="visually-hidden">Email address</label>
+            <input type="email"
+                   name="login"
+                   value="<?= $registerData['login'] ?? '' ?>"
+                   id="inputEmail"
+                   class="form-control"
+                   placeholder="Email address"
+                   required>
+
+            <label for="inputPassword" class="visually-hidden">Password</label>
+            <input type="password"
+                   name="password"
+                   value="<?= $registerData['password'] ?? '' ?>"
+                   id="inputPassword"
+                   class="form-control"
+                   placeholder="Password"
+                   required>
+
+            <label for="inputRepeatPassword" class="visually-hidden">Repeat Password</label>
+            <input type="password"
+                   name="repeat_password"
+                   value="<?= $registerData['repeat_password'] ?? '' ?>"
+                   id="inputRepeatPassword"
+                   class="form-control"
+                   placeholder="Repeat Password"
+                   required>
+
+            <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Sign Up</button>
         </form>
     </div>
 </main>
