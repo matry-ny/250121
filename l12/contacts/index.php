@@ -1,6 +1,11 @@
 <?php
 
+const RECORDS_ON_PAGE = 5;
+
+require_once __DIR__ . '/lib/security.php';
+
 $comments = require __DIR__ . '/get-comments.php';
+$pagination = require __DIR__ . '/pagination.php';
 
 ?>
 <!doctype html>
@@ -42,7 +47,14 @@ $comments = require __DIR__ . '/get-comments.php';
 <!-- Begin page content -->
 <main class="flex-shrink-0">
     <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <a href="logoup.php" class="btn btn-danger inline-block">Log Out</a>
+            </div>
+        </div>
+
         <form action="add-comment.php" method="post">
+            <!--
             <div class="mb-3 mt-3">
                 <label for="author_name">Author Name</label>
                 <input type="text" name="author" id="author_name" required class="form-control">
@@ -56,6 +68,7 @@ $comments = require __DIR__ . '/get-comments.php';
                     <option value="other">Other</option>
                 </select>
             </div>
+            -->
 
             <div class="mb-3">
                 <label for="comment">Comment</label>
@@ -70,9 +83,13 @@ $comments = require __DIR__ . '/get-comments.php';
             <tr>
                 <td>
                     <p>
-                        <?= $comment['author'], '<br>' ?>
-                        <?= $comment['gender'], '<br>' ?>
-                        <?= date('Y-m-d H:i:s', $comment['time']) ?>
+                        <?= $comment['name'], '<br>' ?>
+                        <?= $comment['age'], ' years old<br>' ?>
+                        <?= $comment['created_at'] ?>
+                    </p>
+                    <p>
+                        <a href="update.php?id=<?= $comment['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="delete.php?id=<?= $comment['id'] ?>" class="btn btn-sm btn-danger">Delete</a>
                     </p>
                 </td>
                 <td valign="top">
@@ -81,6 +98,7 @@ $comments = require __DIR__ . '/get-comments.php';
             </tr>
         <?php endforeach; ?>
         </table>
+        <?= $pagination ?>
     </div>
 </main>
 
