@@ -10,6 +10,7 @@ class App
 {
     private const ROUTER = 'router';
     private const VIEW = 'view';
+    private const DB = 'db';
 
     private Storage $config;
 
@@ -38,6 +39,7 @@ class App
 
     public function run(): mixed
     {
+        $this->initDb();
         $this->initView();
         return $this->initRouter();
     }
@@ -62,8 +64,7 @@ class App
             $this->config->get('views.dir'),
             $this->config->get('views.ext'),
             $this->config->get('views.layouts.dir'),
-            $this->config->get('views.layouts.default'),
-            $this->config->get('views.layouts.guest'),
+            $this->config->get('views.layouts.default')
         );
         $this->components->set(self::VIEW, $view);
     }
@@ -71,6 +72,27 @@ class App
     public function getView(): View
     {
         return $this->components->get(self::VIEW);
+    }
+
+    public function initDb(): void
+    {
+        $db = new DB(
+            $this->config->get('db.host'),
+            $this->config->get('db.user'),
+            $this->config->get('db.password'),
+            $this->config->get('db.name')
+        );
+        $this->components->set(self::DB, $db);
+    }
+
+    public function getDb(): DB
+    {
+        return $this->components->get(self::DB);
+    }
+
+    public function config(): Storage
+    {
+        return $this->config;
     }
 
     private function __construct(array $config)

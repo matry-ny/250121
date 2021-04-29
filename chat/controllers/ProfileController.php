@@ -2,7 +2,9 @@
 
 namespace controllers;
 
-class ProfileController
+use components\web\AbstractSecuredWebController;
+
+class ProfileController extends AbstractSecuredWebController
 {
     public function actionView()
     {

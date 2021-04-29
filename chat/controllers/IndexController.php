@@ -2,20 +2,18 @@
 
 namespace controllers;
 
-use components\App;
+use components\web\AbstractSecuredWebController;
 
-class IndexController
+class IndexController extends AbstractSecuredWebController
 {
     public function actionIndex(): string
     {
-        return App::instance()
-            ->getView()
-            ->render('index/index', [
-                'userName' => 'Dmytro Test',
-                'age' => 32,
-                'gender' => 'male',
-                'file' => 'test',
-                'variables' => 123123
-            ]);
+        return $this->render('index/index', [
+            'userName' => 'Dmytro Test',
+            'age' => 32,
+            'gender' => 'male',
+            'file' => 'test',
+            'variables' => 123123
+        ]);
     }
 }

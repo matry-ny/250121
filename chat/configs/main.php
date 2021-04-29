@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'db' => [
+        'host' => 'db',
+        'user' => 'skillup_user',
+        'password' => 'skillup_pwd',
+        'name' => 'skillup_db',
+    ],
     'views' => [
         'dir' => __DIR__ . '/../views',
         'ext' => '.php',
