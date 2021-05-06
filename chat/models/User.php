@@ -2,17 +2,36 @@
 
 namespace models;
 
+use RuntimeException;
+use components\App;
+use models\entities\UserEntity;
+
 class User
 {
-    private bool $isGuest = true;
+    public const USER = 'user';
+
+    private ?UserEntity $user;
 
     public function isGuest(): bool
     {
-        return $this->isGuest;
+        return empty($this->user);
     }
 
-    public function setIsGuest(bool $isGuest): void
+    public function getUser(): UserEntity
     {
-        $this->isGuest = $isGuest;
+        return $this->user;
+    }
+
+    public function login(string $login, string $password): bool
+    {
+        $user = UserEntity::find($login, 'login');
+        if (!$user || !$user->isValidPassword($password)) {
+            throw new RuntimeException("Login or password is incorrect");
+        }
+
+        $this->user = $user;
+        App::instance()->getSession()->set(self::USER, $this);
+
+        return true;
     }
 }

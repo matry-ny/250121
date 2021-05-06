@@ -1,5 +1,6 @@
 <?php
 
+use components\App;
 use components\View;
 
 /**
@@ -46,6 +47,11 @@ use components\View;
 <!-- Begin page content -->
 <main class="flex-shrink-0">
     <div class="container">
+        <?php foreach (App::instance()->getSession()->getFlash('errors', []) as $error) : ?>
+            <div class="alert alert-danger" role="alert">
+                <?= $error ?>
+            </div>
+        <?php endforeach; ?>
 
         <?= $this->getContent() ?>
 

@@ -2,15 +2,17 @@
 
 namespace components\db;
 
+use components\db\queries\Update;
 use PDO;
 use InvalidArgumentException;
 use components\App;
+use components\db\queries\Insert;
 
 abstract class ActiveRecord
 {
     private PDO $db;
-    private string $primaryKey;
-    private array $attributes = [];
+    protected string $primaryKey;
+    protected array $attributes = [];
 
     final public function __construct()
     {
@@ -40,16 +42,53 @@ abstract class ActiveRecord
         $this->attributes[$key] = $value;
     }
 
-    public static function find(int $id, string $primaryKey = 'id'): static
+    final public function __sleep(): array
+    {
+        return ['attributes', 'primaryKey'];
+    }
+
+    final public function __wakeup()
+    {
+        $this->db = App::instance()->getDb()->getConnection();
+    }
+
+    public static function find(int|string $id, string $primaryKey = 'id'): static|bool
     {
         $db = App::instance()->getDb()->getConnection();
 
-        $sql = 'SELECT * FROM ' . static::tableName() . ' WHERE id = :id';
+        $sql = 'SELECT * FROM ' . static::tableName() . " WHERE {$primaryKey} = :{$primaryKey}";
         $stmt = $db->prepare($sql);
         $stmt->execute([$primaryKey => $id]);
         $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, static::class);
 
         return $stmt->fetch();
+    }
+
+    /**
+     * @return static[]
+     */
+    public static function findAll(): array
+    {
+        $db = App::instance()->getDb()->getConnection();
+
+        $sql = 'SELECT * FROM ' . static::tableName();
+        $stmt = $db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, static::class);
+    }
+
+    public function insert(): bool
+    {
+        return (new Insert(static::tableName(), $this->attributes))->getQuery()->execute();
+    }
+
+    public function update(): bool
+    {
+        $query = new Update(
+            static::tableName(),
+            $this->attributes,
+            [$this->primaryKey => $this->{$this->primaryKey}]
+        );
+        return $query->getQuery()->execute();
     }
 
     private function setSchema(): void

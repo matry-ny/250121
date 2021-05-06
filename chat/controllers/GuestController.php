@@ -2,16 +2,26 @@
 
 namespace controllers;
 
+use components\App;
 use components\web\AbstractWebController;
 use helpers\RequestsHelper;
-use models\entities\CommentEntity;
-use models\entities\UserContactEntity;
 use models\entities\UserEntity;
+use models\User;
+use RuntimeException;
 
 class GuestController extends AbstractWebController
 {
     public function actionLogin()
     {
+        if (RequestsHelper::isPost()) {
+            try {
+                (new User())->login($_POST['login'], $_POST['password']);
+                $this->redirect('/');
+            } catch (RuntimeException $exception) {
+                App::instance()->getSession()->addFlash('errors', $exception->getMessage());
+            }
+        }
+
         return $this->render('guest/login', [], 'guest');
     }
 
@@ -21,19 +31,12 @@ class GuestController extends AbstractWebController
             $user = new UserEntity();
             $user->name = $_POST['name'];
             $user->login = $_POST['login'];
-            $user->password = password_hash($_POST['password'],  PASSWORD_BCRYPT);
+            $user->password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-            var_dump($user);exit;
-
-//            $user->save();
-
-            $user = UserEntity::find(1);
-            $contact = UserContactEntity::find(16);
-            $comment = CommentEntity::find(2);
-            var_dump($user, $contact, $comment);
-            exit;
+            $user->insert();
+            $this->redirect('/guest/login');
         }
 
-        return $this->render('guest/register', [], 'guest');
+        return $this->render('/guest/register', [], 'guest');
     }
 }

@@ -3,17 +3,14 @@
 namespace controllers;
 
 use components\web\AbstractSecuredWebController;
+use models\entities\CommentEntity;
 
 class IndexController extends AbstractSecuredWebController
 {
     public function actionIndex(): string
     {
         return $this->render('index/index', [
-            'userName' => 'Dmytro Test',
-            'age' => 32,
-            'gender' => 'male',
-            'file' => 'test',
-            'variables' => 123123
+            'comments' => CommentEntity::findAll()
         ]);
     }
 }

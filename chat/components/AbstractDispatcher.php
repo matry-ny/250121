@@ -26,6 +26,10 @@ abstract class AbstractDispatcher
 
     protected function prepareParts(string $request)
     {
+        $paramsStart = stripos($request, '?');
+        if ($paramsStart !== false) {
+            $request = substr($request, 0, $paramsStart);
+        }
         $parts = explode('/', trim($request, '/'));
         $parts = array_filter($parts);
 

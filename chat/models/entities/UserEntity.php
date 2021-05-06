@@ -20,4 +20,9 @@ class UserEntity extends ActiveRecord
     {
         return 'users';
     }
+
+    public function isValidPassword(string $password): bool
+    {
+        return password_verify($password, $this->password);
+    }
 }

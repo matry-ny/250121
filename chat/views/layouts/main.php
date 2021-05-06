@@ -1,11 +1,15 @@
 <?php
 
+use components\App;
 use components\View;
+
+$auth = App::instance()->getSession()->get(\models\User::USER);
 
 /**
  * @var View $this
- * @var string $userName
+ * @var \models\User $auth
  */
+
 
 ?>
 <!doctype html>
@@ -47,14 +51,12 @@ use components\View;
 <main class="flex-shrink-0">
     <div class="container">
         <div class="row">
-            <div class="col-4">Hi, <?= $userName ?></div>
+            <div class="col-4">Hi, <?= $auth->getUser()->name ?></div>
             <div class="col-3">
-                <a href="logoup.php" class="btn btn-danger inline-block">Log Out</a>
+                <a href="/user/logout" class="btn btn-danger inline-block">Log Out</a>
             </div>
         </div>
 
-        <?= $file ?>
-        <?= $variables ?>
         <?= $this->getContent() ?>
 
     </div>
