@@ -16,6 +16,7 @@ services:
       - ./:/var/www
       - ./docker/nginx/skillup.local.conf:/etc/nginx/conf.d/skillup.local.conf
       - ./docker/nginx/chat.local.conf:/etc/nginx/conf.d/chat.local.conf
+      - ./docker/nginx/lara.local.conf:/etc/nginx/conf.d/lara.local.conf
     depends_on:
       - app
   db:
@@ -31,6 +32,20 @@ services:
       MYSQL_DATABASE: skillup_db
       MYSQL_USER: skillup_user
       MYSQL_PASSWORD: skillup_pwd
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+  laraDB:
+    image: mysql:8.0.23
+    ports:
+      - 3307:3306
+    restart: always
+    volumes:
+      - ./docker/lara-mysql:/var/lib/mysql
+    container_name: skillup_lara_mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: lara_db
+      MYSQL_USER: lara_user
+      MYSQL_PASSWORD: lara_pwd
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
   phpmyadmin:
     image: phpmyadmin
