@@ -16,3 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('register', static function () {
+    return view('auth.register');
+});
+Route::get('login', static function () {
+    return view('auth.login');
+});
+
+Route::post('register', 'App\Http\Controllers\Auth\RegisterController@process');
+Route::post('login', 'App\Http\Controllers\Auth\LoginController@process');
