@@ -13,21 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'guest'], function() {
-    Route::get('register', static function () {
-        return view('auth.register');
-    });
+Route::group(['middleware' => 'guest'], static function () {
+    Route::get('register', fn () => view('auth.register'));
     Route::get('login', [
         'as' => 'login',
-        'uses' => static function () {
-            return view('auth.login');
-        }
+        'uses' => fn () => view('auth.login')
     ]);
 
     Route::post('register', 'App\Http\Controllers\Auth\RegisterController@process');
     Route::post('login', ['as' => 'login', 'uses' => 'App\Http\Controllers\Auth\LoginController@process']);
 });
 
-Route::group(['middleware' => 'auth'], function() {
-    Route::get('', ['as' => 'home', 'uses' => 'App\Http\Controllers\IndexController@index']);
+Route::group(['middleware' => 'auth'], static function () {
+    Route::get('', fn () => view('index'));
+    Route::get('logout', 'App\Http\Controllers\Auth\LogoutController@process');
+    Route::post('import.excel', 'App\Http\Controllers\ExcelController@import')->name('import.excel');
+    Route::get('export.excel', 'App\Http\Controllers\ExcelController@export')->name('export.excel');
 });
