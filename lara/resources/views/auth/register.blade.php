@@ -18,4 +18,6 @@
         {{ Form::submit('Register', ['class' => 'btn btn-lg btn-primary mt-3']) }}
 
     {{ Form::close() }}
+
+    <p>or <a href="/login">Login</a></p>
 @stop

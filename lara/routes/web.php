@@ -13,16 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'guest'], function() {
+    Route::get('register', static function () {
+        return view('auth.register');
+    });
+    Route::get('login', [
+        'as' => 'login',
+        'uses' => static function () {
+            return view('auth.login');
+        }
+    ]);
+
+    Route::post('register', 'App\Http\Controllers\Auth\RegisterController@process');
+    Route::post('login', ['as' => 'login', 'uses' => 'App\Http\Controllers\Auth\LoginController@process']);
 });
 
-Route::get('register', static function () {
-    return view('auth.register');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('', ['as' => 'home', 'uses' => 'App\Http\Controllers\IndexController@index']);
 });
-Route::get('login', static function () {
-    return view('auth.login');
-});
-
-Route::post('register', 'App\Http\Controllers\Auth\RegisterController@process');
-Route::post('login', 'App\Http\Controllers\Auth\LoginController@process');
