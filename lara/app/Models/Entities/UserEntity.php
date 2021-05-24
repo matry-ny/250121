@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $email_verified_at
  * @property string $password
  * @property string $remember_token
+ * @property string $api_token
  * @property string $created_at
  * @property string $updated_at
  */
@@ -41,6 +42,7 @@ class UserEntity extends Model
     protected $hidden = [
         'password',
         'remember_token',
+        'api_token',
     ];
 
     /**

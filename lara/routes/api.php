@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'auth:api'], static function () {
+    Route::get('users', 'App\Http\Controllers\Api\UsersController@all');
+
+    Route::get('comments', 'App\Http\Controllers\Api\CommentsController@all');
+    Route::post('comment', 'App\Http\Controllers\Api\CommentsController@create');
+    Route::put('comment/{id}', 'App\Http\Controllers\Api\CommentsController@update');
+    Route::delete('comment/{id}', 'App\Http\Controllers\Api\CommentsController@delete');
 });
