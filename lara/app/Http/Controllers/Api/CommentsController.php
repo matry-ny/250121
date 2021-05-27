@@ -27,6 +27,8 @@ class CommentsController extends Controller
         $comment->user_id = Auth::user()->getAuthIdentifier();
         $comment->save();
 
+        $comment->author = $comment->author()->first();
+
         return $comment;
     }
 

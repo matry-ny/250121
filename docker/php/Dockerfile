@@ -51,6 +51,8 @@ RUN wget https://phar.phpunit.de/phpunit-6.0.phar && \
         chmod +x phpunit-6.0.phar && \
         mv phpunit-6.0.phar /usr/local/bin/phpunit
 
+RUN apt-get install -y nodejs npm
+
 RUN usermod -u 1000 www-data
 
 VOLUME /root/.composer
