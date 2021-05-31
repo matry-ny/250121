@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\LiqPayServiceProvider;
+
 return [
 
     /*
@@ -176,6 +178,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        LiqPayServiceProvider::class,
     ],
 
     /*
@@ -230,6 +234,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+        'LiqPayService' => \App\Facades\LiqPayService::class,
     ],
 
 ];

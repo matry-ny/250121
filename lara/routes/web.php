@@ -29,4 +29,5 @@ Route::group(['middleware' => 'auth'], static function () {
     Route::get('logout', 'App\Http\Controllers\Auth\LogoutController@process');
     Route::post('import.excel', 'App\Http\Controllers\ExcelController@import')->name('import.excel');
     Route::get('export.excel', 'App\Http\Controllers\ExcelController@export')->name('export.excel');
+    Route::get('liqpay', 'App\Http\Controllers\PaymentsController@liqpay')->name('payments.liqpay');
 });
