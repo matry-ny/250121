@@ -14,6 +14,8 @@
         </div>
     {{ Form::close() }}
 
+    {!! LiqPayService::pay(100, 'UAH', 'test order', '123-33-22') !!}
+
     {{ Form::open(['id' => 'add-comment-form']) }}
     <div class="col-12 mt-3">
         <textarea name="comment" class="form-control"></textarea>
